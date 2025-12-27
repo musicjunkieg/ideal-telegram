@@ -59,6 +59,10 @@ src/lib/
 │   ├── encryption.ts        # AES-256-GCM session encryption
 │   ├── cookies.ts           # Cookie session store with auto-refresh
 │   └── index.ts             # Public exports
+├── api/
+│   ├── bluesky.ts           # Bluesky API client (getProfile, getAuthorFeed)
+│   ├── retry.ts             # Retry utility with exponential backoff
+│   └── index.ts             # Public exports
 ├── types.ts                 # Shared types (Session, User, etc.)
 
 src/routes/
@@ -90,7 +94,6 @@ drizzle.config.ts            # Drizzle Kit configuration
 ```
 src/lib/
 ├── api/
-│   ├── bluesky.ts           # Bluesky API client
 │   ├── constellation.ts     # Backlink queries
 │   └── spacedust.ts         # WebSocket firehose
 ├── ml/toxicity.ts           # ML service client
@@ -184,6 +187,6 @@ export const load = ({ locals }) => {
 
 ## Key Considerations
 
-- **Rate Limiting**: Bluesky API limited to 10 req/s - implement token bucket
+- **Rate Limiting**: Bluesky API allows 3000 req/5min; handled via retry with exponential backoff on 429 responses
 - **Privacy**: Blocks are public on Bluesky; mutes are private
 - **Bluesky DIDs**: User identities are DIDs (decentralized identifiers), not handles
