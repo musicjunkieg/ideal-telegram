@@ -64,6 +64,10 @@ src/lib/
 │   ├── constellation.ts     # Constellation backlink client (getInteractors)
 │   ├── retry.ts             # Retry utility with exponential backoff
 │   └── index.ts             # Public exports
+├── analysis/
+│   ├── ml-client.ts         # ML service client (analyzeToxicity, checkHealth)
+│   ├── historical.ts        # Historical analysis pipeline (analyzeUserHistory)
+│   └── index.ts             # Public exports
 ├── types.ts                 # Shared types (Session, User, etc.)
 
 src/routes/
@@ -96,7 +100,6 @@ drizzle.config.ts            # Drizzle Kit configuration
 src/lib/
 ├── api/
 │   └── spacedust.ts         # WebSocket firehose
-├── ml/toxicity.ts           # ML service client
 └── jobs/queue.ts            # BullMQ setup
 
 src/routes/
