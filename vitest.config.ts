@@ -21,12 +21,7 @@ export default defineConfig({
 			provider: 'v8',
 			reporter: ['text', 'html', 'lcov'],
 			include: ['src/**/*.{js,ts,svelte}'],
-			exclude: [
-				'src/**/*.{test,spec}.{js,ts}',
-				'src/tests/**',
-				'src/app.d.ts',
-				'src/app.html'
-			]
+			exclude: ['src/**/*.{test,spec}.{js,ts}', 'src/tests/**', 'src/app.d.ts', 'src/app.html']
 		},
 
 		// Resolve $lib and other SvelteKit aliases

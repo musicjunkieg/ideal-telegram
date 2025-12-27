@@ -64,12 +64,12 @@ docker compose logs -f   # Follow logs
 
 ### Services
 
-| Service | Port | Description |
-|---------|------|-------------|
-| app | 5173 | SvelteKit dev server |
-| db | 5432 | PostgreSQL database |
-| redis | 6379 | Redis for BullMQ |
-| ml-service | 8000 | Python Detoxify API |
+| Service    | Port | Description          |
+| ---------- | ---- | -------------------- |
+| app        | 5173 | SvelteKit dev server |
+| db         | 5432 | PostgreSQL database  |
+| redis      | 6379 | Redis for BullMQ     |
+| ml-service | 8000 | Python Detoxify API  |
 
 ### Environment Variables
 
@@ -80,6 +80,7 @@ cp .env.example .env
 ```
 
 Key variables:
+
 - `DATABASE_URL` - PostgreSQL connection string
 - `REDIS_URL` - Redis connection string
 - `ML_SERVICE_URL` - ML service endpoint

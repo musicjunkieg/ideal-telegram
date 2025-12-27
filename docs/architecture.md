@@ -31,12 +31,12 @@
 
 ## External Services
 
-| Service | Purpose | URL |
-|---------|---------|-----|
+| Service       | Purpose                                     | URL                          |
+| ------------- | ------------------------------------------- | ---------------------------- |
 | Constellation | Query backlinks (who replied/mentioned you) | constellation.microcosm.blue |
-| Spacedust | Real-time firehose of interactions | spacedust.microcosm.blue |
-| Slingshot | Identity resolution and record caching | slingshot.microcosm.blue |
-| Bluesky API | User feeds, blocking, muting | public.api.bsky.app |
+| Spacedust     | Real-time firehose of interactions          | spacedust.microcosm.blue     |
+| Slingshot     | Identity resolution and record caching      | slingshot.microcosm.blue     |
+| Bluesky API   | User feeds, blocking, muting                | public.api.bsky.app          |
 
 ## File Structure
 
@@ -47,6 +47,10 @@ src/lib/
 ├── db/
 │   ├── schema.ts            # Drizzle schema (users, flagged_users, toxic_evidence)
 │   └── index.ts             # Database client
+├── oauth/
+│   ├── client.ts            # AT Protocol OAuth + DPoP handling
+│   ├── stores.ts            # Memory stores for state/sessions
+│   └── index.ts             # Public exports
 
 src/routes/
 ├── client-metadata.json/
@@ -67,7 +71,6 @@ drizzle.config.ts            # Drizzle Kit configuration
 
 ```
 src/lib/
-├── oauth/client.ts          # AT Protocol OAuth + DPoP handling
 ├── api/
 │   ├── bluesky.ts           # Bluesky API client
 │   ├── constellation.ts     # Backlink queries
@@ -90,41 +93,44 @@ workers/                     # Background workers (firehose, digest)
 ## Database Schema
 
 ### users
+
 Primary table for authenticated Bluesky users.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| did | text (PK) | Bluesky DID |
-| handle | text | Bluesky handle |
-| email | text | Email for digests |
-| action_mode | enum | auto_block, dashboard, email_digest |
-| toxicity_threshold | real | Score threshold (default 0.7) |
-| monitoring_enabled | boolean | Enable/disable monitoring |
+| Column             | Type      | Description                         |
+| ------------------ | --------- | ----------------------------------- |
+| did                | text (PK) | Bluesky DID                         |
+| handle             | text      | Bluesky handle                      |
+| email              | text      | Email for digests                   |
+| action_mode        | enum      | auto_block, dashboard, email_digest |
+| toxicity_threshold | real      | Score threshold (default 0.7)       |
+| monitoring_enabled | boolean   | Enable/disable monitoring           |
 
 ### flagged_users
+
 Users identified as potentially toxic.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | serial (PK) | Auto-increment ID |
-| owner_did | text (FK) | User who owns this flag |
-| flagged_did | text | DID of flagged user |
-| aggregate_toxicity_score | real | Combined score |
-| toxic_post_count | integer | Number of toxic posts |
-| status | enum | pending, blocked, muted, dismissed |
+| Column                   | Type        | Description                        |
+| ------------------------ | ----------- | ---------------------------------- |
+| id                       | serial (PK) | Auto-increment ID                  |
+| owner_did                | text (FK)   | User who owns this flag            |
+| flagged_did              | text        | DID of flagged user                |
+| aggregate_toxicity_score | real        | Combined score                     |
+| toxic_post_count         | integer     | Number of toxic posts              |
+| status                   | enum        | pending, blocked, muted, dismissed |
 
 ### toxic_evidence
+
 Individual toxic posts/interactions as evidence.
 
-| Column | Type | Description |
-|--------|------|-------------|
-| id | serial (PK) | Auto-increment ID |
-| flagged_user_id | integer (FK) | Reference to flagged_users |
-| post_uri | text | AT Protocol URI of post |
-| post_text | text | Content of post |
-| toxicity_scores | jsonb | All category scores |
-| primary_category | text | Highest-scoring category |
-| interaction_type | enum | reply, mention, quote |
+| Column           | Type         | Description                |
+| ---------------- | ------------ | -------------------------- |
+| id               | serial (PK)  | Auto-increment ID          |
+| flagged_user_id  | integer (FK) | Reference to flagged_users |
+| post_uri         | text         | AT Protocol URI of post    |
+| post_text        | text         | Content of post            |
+| toxicity_scores  | jsonb        | All category scores        |
+| primary_category | text         | Highest-scoring category   |
+| interaction_type | enum         | reply, mention, quote      |
 
 ## Key Considerations
 

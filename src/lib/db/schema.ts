@@ -1,8 +1,22 @@
-import { pgTable, text, real, integer, timestamp, boolean, jsonb, pgEnum } from 'drizzle-orm/pg-core';
+import {
+	pgTable,
+	text,
+	real,
+	integer,
+	timestamp,
+	boolean,
+	jsonb,
+	pgEnum
+} from 'drizzle-orm/pg-core';
 
 // Enums
 export const actionModeEnum = pgEnum('action_mode', ['auto_block', 'dashboard', 'email_digest']);
-export const flaggedStatusEnum = pgEnum('flagged_status', ['pending', 'blocked', 'muted', 'dismissed']);
+export const flaggedStatusEnum = pgEnum('flagged_status', [
+	'pending',
+	'blocked',
+	'muted',
+	'dismissed'
+]);
 export const interactionTypeEnum = pgEnum('interaction_type', ['reply', 'mention', 'quote']);
 
 // Users table - stores authenticated Bluesky users

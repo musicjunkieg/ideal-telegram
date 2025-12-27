@@ -20,13 +20,14 @@ npm run test:ui           # Open Vitest UI for visual debugging
 
 ## File Conventions
 
-| Pattern | Location | Purpose |
-|---------|----------|---------|
-| `*.test.ts` | Next to source file | Unit tests |
-| `*.integration.test.ts` | Next to source file | Integration tests |
-| `src/tests/*.ts` | Dedicated folder | Shared test utilities, fixtures |
+| Pattern                 | Location            | Purpose                         |
+| ----------------------- | ------------------- | ------------------------------- |
+| `*.test.ts`             | Next to source file | Unit tests                      |
+| `*.integration.test.ts` | Next to source file | Integration tests               |
+| `src/tests/*.ts`        | Dedicated folder    | Shared test utilities, fixtures |
 
 Example structure:
+
 ```
 src/lib/oauth/
 ├── client.ts
@@ -47,15 +48,15 @@ import { describe, it, expect } from 'vitest';
 import { calculateToxicityScore } from './toxicity';
 
 describe('calculateToxicityScore', () => {
-  it('returns 0 for empty input', () => {
-    expect(calculateToxicityScore('')).toBe(0);
-  });
+	it('returns 0 for empty input', () => {
+		expect(calculateToxicityScore('')).toBe(0);
+	});
 
-  it('returns score between 0 and 1', () => {
-    const score = calculateToxicityScore('some text');
-    expect(score).toBeGreaterThanOrEqual(0);
-    expect(score).toBeLessThanOrEqual(1);
-  });
+	it('returns score between 0 and 1', () => {
+		const score = calculateToxicityScore('some text');
+		expect(score).toBeGreaterThanOrEqual(0);
+		expect(score).toBeLessThanOrEqual(1);
+	});
 });
 ```
 
@@ -66,17 +67,17 @@ import { describe, it, expect } from 'vitest';
 import { GET } from './+server';
 
 describe('GET /client-metadata.json', () => {
-  it('returns valid OAuth client metadata', async () => {
-    const response = await GET({
-      url: new URL('http://localhost:5173/client-metadata.json')
-    });
+	it('returns valid OAuth client metadata', async () => {
+		const response = await GET({
+			url: new URL('http://localhost:5173/client-metadata.json')
+		});
 
-    const data = await response.json();
+		const data = await response.json();
 
-    expect(data.client_id).toBe('http://localhost:5173/client-metadata.json');
-    expect(data.dpop_bound_access_tokens).toBe(true);
-    expect(data.grant_types).toContain('authorization_code');
-  });
+		expect(data.client_id).toBe('http://localhost:5173/client-metadata.json');
+		expect(data.dpop_bound_access_tokens).toBe(true);
+		expect(data.grant_types).toContain('authorization_code');
+	});
 });
 ```
 
@@ -90,19 +91,19 @@ import { fetchUserProfile } from './bluesky';
 
 // Mock the fetch function
 vi.mock('$lib/api/client', () => ({
-  apiClient: {
-    get: vi.fn()
-  }
+	apiClient: {
+		get: vi.fn()
+	}
 }));
 
 describe('fetchUserProfile', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-  it('fetches and returns user profile', async () => {
-    // ... test implementation
-  });
+	it('fetches and returns user profile', async () => {
+		// ... test implementation
+	});
 });
 ```
 
@@ -125,6 +126,7 @@ describe('fetchUserProfile', () => {
 ## CI Integration
 
 Tests run automatically on:
+
 - Pull request creation/update
 - Push to main branch
 

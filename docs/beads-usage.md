@@ -42,11 +42,11 @@ This project uses **beads** for issue tracking. The database is in the parent di
 
 ## Issue Properties
 
-| Property | Values |
-|----------|--------|
-| **Status** | `open`, `in_progress`, `blocked`, `closed` |
+| Property     | Values                                         |
+| ------------ | ---------------------------------------------- |
+| **Status**   | `open`, `in_progress`, `blocked`, `closed`     |
 | **Priority** | 0=critical, 1=high, 2=medium, 3=low, 4=backlog |
-| **Type** | `bug`, `feature`, `task`, `epic`, `chore` |
+| **Type**     | `bug`, `feature`, `task`, `epic`, `chore`      |
 
 ## Typical Session
 

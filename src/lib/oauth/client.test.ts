@@ -129,9 +129,7 @@ describe('OAuth Stores', () => {
 			const store = new MemoryStateStore();
 			const key = 'test-key';
 			// Use a minimal mock that satisfies the store interface
-			const value = { dpopJwk: { kty: 'EC' as const } } as Parameters<
-				typeof store.set
-			>[1];
+			const value = { dpopJwk: { kty: 'EC' as const } } as Parameters<typeof store.set>[1];
 
 			await store.set(key, value);
 			const retrieved = await store.get(key);
@@ -144,9 +142,7 @@ describe('OAuth Stores', () => {
 
 			const store = new MemoryStateStore();
 			const key = 'test-key';
-			const value = { dpopJwk: { kty: 'EC' as const } } as Parameters<
-				typeof store.set
-			>[1];
+			const value = { dpopJwk: { kty: 'EC' as const } } as Parameters<typeof store.set>[1];
 
 			await store.set(key, value);
 			await store.del(key);
@@ -163,9 +159,7 @@ describe('OAuth Stores', () => {
 			const store = new MemorySessionStore();
 			const did = 'did:plc:test123';
 			// Use a minimal mock that satisfies the store interface
-			const session = { dpopJwk: { kty: 'EC' as const } } as Parameters<
-				typeof store.set
-			>[1];
+			const session = { dpopJwk: { kty: 'EC' as const } } as Parameters<typeof store.set>[1];
 
 			await store.set(did, session);
 			const retrieved = await store.get(did);

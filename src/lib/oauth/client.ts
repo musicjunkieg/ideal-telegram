@@ -17,8 +17,11 @@ export interface CreateOAuthClientOptions {
 export async function createOAuthClient(
 	options: CreateOAuthClientOptions
 ): Promise<NodeOAuthClient> {
-	const { clientId, stateStore = new MemoryStateStore(), sessionStore = new MemorySessionStore() } =
-		options;
+	const {
+		clientId,
+		stateStore = new MemoryStateStore(),
+		sessionStore = new MemorySessionStore()
+	} = options;
 
 	currentClientId = clientId;
 

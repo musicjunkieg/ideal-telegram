@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5173:5173"
+      - '5173:5173'
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/toxicity_shield
       - REDIS_URL=redis://redis:6379
@@ -28,11 +28,11 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: toxicity_shield
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -41,7 +41,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
@@ -52,11 +52,11 @@ services:
       context: ./ml-service
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - '8000:8000'
     environment:
       - MODEL_NAME=original
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000/health']
       interval: 30s
       timeout: 10s
       retries: 3
