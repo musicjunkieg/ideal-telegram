@@ -61,6 +61,7 @@ src/lib/
 │   └── index.ts             # Public exports
 ├── api/
 │   ├── bluesky.ts           # Bluesky API client (getProfile, getAuthorFeed)
+│   ├── constellation.ts     # Constellation backlink client (getInteractors)
 │   ├── retry.ts             # Retry utility with exponential backoff
 │   └── index.ts             # Public exports
 ├── types.ts                 # Shared types (Session, User, etc.)
@@ -94,7 +95,6 @@ drizzle.config.ts            # Drizzle Kit configuration
 ```
 src/lib/
 ├── api/
-│   ├── constellation.ts     # Backlink queries
 │   └── spacedust.ts         # WebSocket firehose
 ├── ml/toxicity.ts           # ML service client
 └── jobs/queue.ts            # BullMQ setup
