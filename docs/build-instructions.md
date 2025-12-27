@@ -31,6 +31,17 @@ npm run lint             # Prettier + ESLint check
 npm run format           # Auto-format with Prettier
 ```
 
+## Testing
+
+```bash
+npm run test             # Run all tests once
+npm run test:watch       # Watch mode for TDD workflow
+npm run test:coverage    # Run with coverage report
+npm run test:ui          # Open Vitest UI
+```
+
+See [Testing](testing.md) for TDD workflow and test patterns.
+
 ## Database (Drizzle)
 
 ```bash

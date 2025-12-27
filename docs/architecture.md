@@ -48,6 +48,10 @@ src/lib/
 │   ├── schema.ts            # Drizzle schema (users, flagged_users, toxic_evidence)
 │   └── index.ts             # Database client
 
+src/routes/
+├── client-metadata.json/
+│   └── +server.ts           # AT Protocol OAuth client metadata endpoint
+
 ml-service/
 ├── main.py                  # FastAPI endpoints (/health, /analyze stub)
 ├── requirements.txt         # Python dependencies
@@ -72,7 +76,10 @@ src/lib/
 └── jobs/queue.ts            # BullMQ setup
 
 src/routes/
-├── auth/callback/+server.ts # OAuth callback
+├── auth/
+│   ├── login/+server.ts     # Initiate OAuth flow
+│   ├── callback/+server.ts  # OAuth callback handler
+│   └── logout/+server.ts    # Clear session
 ├── dashboard/+page.svelte   # Main dashboard
 ├── settings/+page.svelte    # User settings
 └── api/block/+server.ts     # Block action endpoint

@@ -15,6 +15,8 @@ nvm use                  # Switch to correct Node version
 npm run dev              # Start dev server
 npm run check            # TypeScript check
 npm run lint             # Lint check
+npm run test             # Run tests
+npm run test:watch       # TDD mode - tests re-run on file changes
 docker compose up        # Start all services (db, redis, ml-service)
 npm run db:push          # Push schema to database
 ```
@@ -24,6 +26,7 @@ npm run db:push          # Push schema to database
 Detailed documentation lives in the `docs/` folder:
 
 - [Build Instructions](docs/build-instructions.md) - Development, build, and code quality commands
+- [Testing](docs/testing.md) - TDD workflow, test patterns, and coverage goals
 - [Beads Usage](docs/beads-usage.md) - Issue tracking workflow and commands
 - [Architecture](docs/architecture.md) - System design, external services, and file structure
 
