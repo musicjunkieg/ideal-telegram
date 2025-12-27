@@ -107,6 +107,105 @@ describe('fetchUserProfile', () => {
 });
 ```
 
+### Testing Auth Routes
+
+Auth routes require mocking the OAuth client and environment variables:
+
+```typescript
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import type { Cookies } from '@sveltejs/kit';
+
+// Mock the OAuth client
+const mockAuthorize = vi.fn();
+vi.mock('$lib/oauth/client', () => ({
+	getOAuthClient: vi.fn(() => ({
+		authorize: mockAuthorize
+	}))
+}));
+
+// Mock environment variables
+vi.mock('$env/static/private', () => ({
+	SESSION_SECRET: '0uNTnZMGtmCICdv/NYubOJEvZQ1LPrlvsQOHmWnzz+E='
+}));
+
+// Helper to create mock cookies
+function createMockCookies(): Cookies & { store: Map<string, string> } {
+	const store = new Map<string, string>();
+	return {
+		store,
+		get: vi.fn((name: string) => store.get(name)),
+		getAll: vi.fn(() => Array.from(store.entries()).map(([name, value]) => ({ name, value }))),
+		set: vi.fn((name: string, value: string) => store.set(name, value)),
+		delete: vi.fn((name: string) => store.delete(name)),
+		serialize: vi.fn(() => '')
+	};
+}
+
+describe('GET /auth/login', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
+
+	it('redirects to OAuth authorization URL', async () => {
+		const authUrl = new URL('https://bsky.social/oauth/authorize?state=test');
+		mockAuthorize.mockResolvedValue(authUrl);
+
+		const { GET } = await import('./+server');
+		const url = new URL('http://localhost/auth/login?handle=test.bsky.social');
+
+		const response = await GET({ url, cookies: createMockCookies() } as any);
+
+		expect(response.status).toBe(302);
+		expect(response.headers.get('Location')).toBe(authUrl.toString());
+	});
+});
+```
+
+### Testing Guards
+
+Guards throw SvelteKit redirects, which need special handling in tests:
+
+```typescript
+import { describe, it, expect, vi } from 'vitest';
+import { requireAuth } from './guards';
+import type { User } from '$lib/types';
+
+// Mock @sveltejs/kit redirect
+vi.mock('@sveltejs/kit', async () => {
+	const actual = await vi.importActual('@sveltejs/kit');
+	return {
+		...actual,
+		redirect: vi.fn((status: number, location: string) => {
+			throw { status, location };
+		})
+	};
+});
+
+interface RedirectError {
+	status: number;
+	location: string;
+}
+
+describe('requireAuth', () => {
+	it('returns user when authenticated', () => {
+		const user: User = { did: 'did:plc:test', handle: 'test.bsky.social' };
+		const result = requireAuth({ user } as App.Locals);
+		expect(result).toEqual(user);
+	});
+
+	it('throws redirect when not authenticated', () => {
+		try {
+			requireAuth({ user: null } as App.Locals);
+		} catch (e) {
+			const err = e as RedirectError;
+			expect(err.status).toBe(303);
+			expect(err.location).toBe('/auth/login');
+		}
+	});
+});
+```
+
 ## TDD Workflow
 
 1. **Understand the requirement**: What should the code do?

@@ -44,6 +44,9 @@
 
 ```
 src/lib/
+├── auth/
+│   ├── guards.ts            # Protected route guards (requireAuth, redirectIfAuthenticated)
+│   └── index.ts             # Public exports
 ├── db/
 │   ├── schema.ts            # Drizzle schema (users, flagged_users, toxic_evidence)
 │   └── index.ts             # Database client
@@ -51,10 +54,21 @@ src/lib/
 │   ├── client.ts            # AT Protocol OAuth + DPoP handling
 │   ├── stores.ts            # Memory stores for state/sessions
 │   └── index.ts             # Public exports
+├── session/
+│   ├── encryption.ts        # AES-256-GCM session encryption
+│   ├── cookies.ts           # Cookie session store with auto-refresh
+│   └── index.ts             # Public exports
+├── types.ts                 # Shared types (Session, User, etc.)
 
 src/routes/
+├── auth/
+│   ├── login/+server.ts     # Initiate OAuth flow (GET/POST)
+│   ├── callback/+server.ts  # OAuth callback handler with handle resolution
+│   └── logout/+server.ts    # Clear session (GET/POST)
 ├── client-metadata.json/
 │   └── +server.ts           # AT Protocol OAuth client metadata endpoint
+
+src/hooks.server.ts          # Session middleware (validates and refreshes sessions)
 
 ml-service/
 ├── main.py                  # FastAPI endpoints (/health, /analyze stub)
@@ -79,10 +93,6 @@ src/lib/
 └── jobs/queue.ts            # BullMQ setup
 
 src/routes/
-├── auth/
-│   ├── login/+server.ts     # Initiate OAuth flow
-│   ├── callback/+server.ts  # OAuth callback handler
-│   └── logout/+server.ts    # Clear session
 ├── dashboard/+page.svelte   # Main dashboard
 ├── settings/+page.svelte    # User settings
 └── api/block/+server.ts     # Block action endpoint
@@ -131,6 +141,42 @@ Individual toxic posts/interactions as evidence.
 | toxicity_scores  | jsonb        | All category scores        |
 | primary_category | text         | Highest-scoring category   |
 | interaction_type | enum         | reply, mention, quote      |
+
+## Authentication Flow
+
+```
+┌──────────┐     ┌─────────────┐     ┌──────────────────┐     ┌─────────────┐
+│  Client  │────▶│ /auth/login │────▶│  Bluesky OAuth   │────▶│  /callback  │
+│          │     │             │     │  (Authorization) │     │             │
+└──────────┘     └─────────────┘     └──────────────────┘     └──────┬──────┘
+                                                                     │
+                                                                     ▼
+                                                            ┌─────────────────┐
+                                                            │ Session Created │
+                                                            │ (Encrypted      │
+                                                            │  Cookie)        │
+                                                            └─────────────────┘
+```
+
+### Session Management
+
+- **Encryption**: AES-256-GCM with random IV per session
+- **Cookie**: `bts_session` - httpOnly, secure, sameSite=lax
+- **Duration**: 7 days with auto-refresh when within 1 day of expiration
+- **Secret**: `SESSION_SECRET` env var (32-byte base64-encoded key)
+
+### Protected Routes
+
+Use guards in `+page.server.ts` or `+layout.server.ts`:
+
+```typescript
+import { requireAuth } from '$lib/auth';
+
+export const load = ({ locals }) => {
+	const user = requireAuth(locals);
+	return { user };
+};
+```
 
 ## Key Considerations
 
