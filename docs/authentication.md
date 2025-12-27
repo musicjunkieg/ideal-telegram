@@ -42,13 +42,29 @@ createSession(cookies, { did, handle, expiresAt }, SESSION_SECRET);
 
 **Endpoint**: `GET /auth/logout` or `POST /auth/logout`
 
-Clears the session cookie and redirects to home:
+Revokes OAuth tokens at the authorization server and clears the session:
 
 ```typescript
 // From src/routes/auth/logout/+server.ts
-destroySession(cookies);
-return Response.redirect('/');
+async function revokeTokens(did: string | undefined): Promise<void> {
+	if (!did) return;
+	try {
+		const client = getOAuthClient();
+		await client.revoke(did);
+	} catch (error) {
+		// Log but don't fail - user should still be logged out
+		console.error('Failed to revoke OAuth tokens:', error);
+	}
+}
+
+export const POST: RequestHandler = async ({ cookies, locals }) => {
+	await revokeTokens(locals.user?.did);
+	destroySession(cookies);
+	return Response.redirect('/');
+};
 ```
+
+Token revocation failures are logged but don't prevent logout - the user's local session is always cleared.
 
 ## Session Management
 
@@ -166,12 +182,40 @@ export const load = ({ locals }) => {
 {/if}
 ```
 
+## OAuth Session Storage
+
+The OAuth client needs to store session and state data for the OAuth flow. Two storage backends are available:
+
+### Redis Storage (Production)
+
+For production deployments, use Redis-backed stores for persistence across server restarts:
+
+```typescript
+import { createRedisStores } from '$lib/oauth/redis-stores';
+
+const { sessionStore, stateStore } = createRedisStores(process.env.REDIS_URL);
+```
+
+Features:
+- **Session TTL**: Automatically expires based on token expiration time
+- **State TTL**: 10 minutes for OAuth state (PKCE verifiers)
+- **Key prefixes**: `oauth:session:` and `oauth:state:` for easy management
+
+### Memory Storage (Development)
+
+For local development, in-memory stores work fine:
+
+```typescript
+import { MemorySessionStore, MemoryStateStore } from '$lib/oauth/stores';
+```
+
 ## Environment Variables
 
 | Variable         | Description                                        | Example                                        |
 | ---------------- | -------------------------------------------------- | ---------------------------------------------- |
 | `SESSION_SECRET` | 32-byte base64-encoded key for session encryption  | `0uNTnZMGtmCICdv/NYubOJEvZQ1LPrlvsQOHmWnzz+E=` |
 | `PUBLIC_URL`     | Public URL of the application (for OAuth redirect) | `https://toxicity-shield.example.com`          |
+| `REDIS_URL`      | Redis connection URL for OAuth session storage     | `redis://localhost:6379`                       |
 
 ### Generating a Session Secret
 
@@ -186,6 +230,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 3. **httpOnly Cookies**: Sessions cannot be accessed by client-side JavaScript
 4. **CSRF Protection**: `sameSite=lax` prevents cross-origin form submissions
 5. **Handle Resolution**: Handles are fetched server-side from Bluesky API, not trusted from OAuth response
+6. **Token Revocation**: OAuth tokens are revoked at the authorization server on logout
 
 ## Testing
 

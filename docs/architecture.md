@@ -52,7 +52,8 @@ src/lib/
 │   └── index.ts             # Database client
 ├── oauth/
 │   ├── client.ts            # AT Protocol OAuth + DPoP handling
-│   ├── stores.ts            # Memory stores for state/sessions
+│   ├── stores.ts            # Memory stores for state/sessions (dev fallback)
+│   ├── redis-stores.ts      # Redis-backed session/state stores (production)
 │   └── index.ts             # Public exports
 ├── session/
 │   ├── encryption.ts        # AES-256-GCM session encryption
@@ -62,9 +63,12 @@ src/lib/
 
 src/routes/
 ├── auth/
-│   ├── login/+server.ts     # Initiate OAuth flow (GET/POST)
+│   ├── login/
+│   │   ├── +page.svelte     # Login page UI (handle entry form)
+│   │   ├── +page.server.ts  # Redirect authenticated users
+│   │   └── +server.ts       # Initiate OAuth flow (GET/POST)
 │   ├── callback/+server.ts  # OAuth callback handler with handle resolution
-│   └── logout/+server.ts    # Clear session (GET/POST)
+│   └── logout/+server.ts    # Token revocation + clear session (GET/POST)
 ├── client-metadata.json/
 │   └── +server.ts           # AT Protocol OAuth client metadata endpoint
 
