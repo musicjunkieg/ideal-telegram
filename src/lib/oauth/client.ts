@@ -1,4 +1,5 @@
 import { NodeOAuthClient } from '@atproto/oauth-client-node';
+import type { NodeSavedStateStore, NodeSavedSessionStore } from '@atproto/oauth-client-node';
 import { MemoryStateStore, MemorySessionStore } from './stores';
 
 // Module-level client instance and config
@@ -7,8 +8,8 @@ let currentClientId: string | null = null;
 
 export interface CreateOAuthClientOptions {
 	clientId: string;
-	stateStore?: MemoryStateStore;
-	sessionStore?: MemorySessionStore;
+	stateStore?: NodeSavedStateStore;
+	sessionStore?: NodeSavedSessionStore;
 }
 
 /**
