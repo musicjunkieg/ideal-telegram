@@ -11,61 +11,72 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
-		href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=Source+Sans+3:wght@400;500;600&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
 		rel="stylesheet"
 	/>
 </svelte:head>
 
-<div class="sanctuary">
+<div class="ground">
 	<!-- Ambient background layers -->
-	<div class="bg-layer bg-gradient"></div>
-	<div class="bg-layer bg-grain"></div>
-	<div class="bg-layer bg-glow"></div>
+	<div class="bg-base"></div>
+	<div class="bg-grain"></div>
+	<div class="bg-warmth"></div>
 
 	<main class="container">
-		<!-- Floating protective shapes -->
-		<div class="floating-shapes" aria-hidden="true">
-			<div class="shape shape-1"></div>
-			<div class="shape shape-2"></div>
-			<div class="shape shape-3"></div>
+		<!-- Subtle ambient orbs -->
+		<div class="ambient-orbs" aria-hidden="true">
+			<div class="orb orb-1"></div>
+			<div class="orb orb-2"></div>
 		</div>
 
 		<div class="content">
 			<header class="header">
-				<div class="shield-icon" aria-hidden="true">
-					<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path
-							d="M24 4L6 12v12c0 11.1 7.8 21.47 18 24 10.2-2.53 18-12.9 18-24V12L24 4z"
-							fill="currentColor"
-							opacity="0.15"
+				<!-- Charcoal Logo: Concentric circles representing absorption/grounding -->
+				<div class="logo" aria-hidden="true">
+					<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<!-- Outer ring - fades in -->
+						<circle
+							cx="32"
+							cy="32"
+							r="30"
+							stroke="currentColor"
+							stroke-width="1.5"
+							opacity="0.2"
+							class="ring ring-outer"
 						/>
-						<path
-							d="M24 4L6 12v12c0 11.1 7.8 21.47 18 24 10.2-2.53 18-12.9 18-24V12L24 4z"
+						<!-- Middle ring -->
+						<circle
+							cx="32"
+							cy="32"
+							r="22"
+							stroke="currentColor"
+							stroke-width="1.5"
+							opacity="0.4"
+							class="ring ring-middle"
+						/>
+						<!-- Inner ring -->
+						<circle
+							cx="32"
+							cy="32"
+							r="14"
 							stroke="currentColor"
 							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							fill="none"
+							opacity="0.7"
+							class="ring ring-inner"
 						/>
-						<path
-							d="M17 24l4 4 10-10"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
+						<!-- Center dot - the grounded core -->
+						<circle cx="32" cy="32" r="5" fill="currentColor" class="core" />
 					</svg>
 				</div>
 				<h1 class="title">Charcoal</h1>
-				<p class="subtitle">Your peaceful corner of Bluesky</p>
+				<p class="tagline">Engage with confidence</p>
 			</header>
 
 			<div class="card" class:focused={isFocused}>
-				<div class="card-glow"></div>
-				<div class="card-content">
-					<p class="welcome-text">
-						We'll help you enjoy a calmer, kinder feed by identifying interactions that might
-						disrupt your peace.
+				<div class="card-inner">
+					<p class="description">
+						Connect authentically on Bluesky. Charcoal absorbs the noise so you can focus on what
+						matters—good-faith conversations and open dialogue.
 					</p>
 
 					<form
@@ -79,10 +90,10 @@
 							};
 						}}
 					>
-						<div class="input-group">
+						<div class="field">
 							<label for="handle" class="label">Your Bluesky handle</label>
-							<div class="input-wrapper" class:focused={isFocused}>
-								<span class="input-prefix">@</span>
+							<div class="input-container" class:focused={isFocused}>
+								<span class="at-symbol">@</span>
 								<input
 									type="text"
 									id="handle"
@@ -99,23 +110,18 @@
 									disabled={isSubmitting}
 								/>
 							</div>
-							<p class="input-hint">We'll redirect you to Bluesky to authorize securely</p>
+							<p class="hint">You'll authorize securely through Bluesky</p>
 						</div>
 
-						<button type="submit" class="submit-btn" disabled={!handle.trim() || isSubmitting}>
+						<button type="submit" class="btn-continue" disabled={!handle.trim() || isSubmitting}>
 							{#if isSubmitting}
-								<span class="spinner"></span>
+								<span class="loading-pulse"></span>
 								<span>Connecting...</span>
 							{:else}
-								<span>Continue to Bluesky</span>
-								<svg
-									class="arrow-icon"
-									viewBox="0 0 20 20"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
+								<span>Continue</span>
+								<svg class="arrow" viewBox="0 0 20 20" fill="none">
 									<path
-										d="M4 10h12m0 0l-4-4m4 4l-4 4"
+										d="M4 10h12m-4-4l4 4-4 4"
 										stroke="currentColor"
 										stroke-width="2"
 										stroke-linecap="round"
@@ -129,97 +135,147 @@
 			</div>
 
 			<footer class="footer">
-				<p class="footer-text">
-					Your privacy matters. We only access what's needed to protect your experience.
-				</p>
+				<p>Your privacy is sacred. We only access what's needed to help you feel at ease.</p>
 			</footer>
 		</div>
 	</main>
 </div>
 
 <style>
-	/* ===== CSS Variables ===== */
+	/* ===== Design Tokens ===== */
 	:root {
-		--color-sage-50: #f6f7f6;
-		--color-sage-100: #e8ebe7;
-		--color-sage-200: #d4dbd2;
-		--color-sage-300: #b5c2b1;
-		--color-sage-400: #8fa388;
-		--color-sage-500: #6b8563;
-		--color-sage-600: #566b4f;
-		--color-sage-700: #455541;
-		--color-sage-800: #3a4637;
-		--color-sage-900: #313b2f;
+		/* Warm charcoal palette */
+		--charcoal-950: #0c0a09;
+		--charcoal-900: #1c1917;
+		--charcoal-800: #292524;
+		--charcoal-700: #44403c;
+		--charcoal-600: #57534e;
+		--charcoal-500: #78716c;
+		--charcoal-400: #a8a29e;
+		--charcoal-300: #d6d3d1;
 
-		--color-cream-50: #fdfcfa;
-		--color-cream-100: #faf8f3;
-		--color-cream-200: #f5f0e6;
+		/* Warm cream tones */
+		--cream-50: #fffbeb;
+		--cream-100: #fef3c7;
+		--cream-200: #fde68a;
+		--cream-300: #fcd34d;
 
-		--color-lavender-100: #f3f0f7;
-		--color-lavender-200: #e5dff0;
-		--color-lavender-300: #d1c7e3;
-		--color-lavender-400: #b5a4d1;
+		/* Amber accent */
+		--amber-500: #f59e0b;
+		--amber-600: #d97706;
+		--amber-700: #b45309;
 
-		--color-text-primary: #2d3529;
-		--color-text-secondary: #5a6356;
-		--color-text-muted: #7d8778;
+		/* Copper accent */
+		--copper: #c9956c;
+		--copper-glow: rgba(201, 149, 108, 0.3);
 
-		--font-display: 'Fraunces', Georgia, serif;
-		--font-body: 'Source Sans 3', system-ui, sans-serif;
+		/* Typography */
+		--font-display: 'Libre Baskerville', Georgia, serif;
+		--font-body: 'Outfit', system-ui, sans-serif;
 
-		--ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
-		--ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+		/* Easing */
+		--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+		--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+		/* Spacing */
+		--space-unit: 0.25rem;
 	}
 
-	/* ===== Reset & Base ===== */
+	/* ===== Reset ===== */
 	* {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
 	}
 
-	.sanctuary {
+	/* ===== Base Container ===== */
+	.ground {
 		min-height: 100vh;
 		min-height: 100dvh;
 		position: relative;
 		overflow: hidden;
 		font-family: var(--font-body);
-		color: var(--color-text-primary);
+		color: var(--cream-100);
 		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 
 	/* ===== Background Layers ===== */
-	.bg-layer {
+	.bg-base {
 		position: fixed;
 		inset: 0;
-		pointer-events: none;
-	}
-
-	.bg-gradient {
-		background: linear-gradient(
-			155deg,
-			var(--color-cream-100) 0%,
-			var(--color-sage-200) 25%,
-			var(--color-lavender-200) 50%,
-			var(--color-sage-300) 75%,
-			var(--color-lavender-300) 100%
-		);
+		background: linear-gradient(165deg, var(--charcoal-900) 0%, var(--charcoal-950) 50%, #0a0705 100%);
 	}
 
 	.bg-grain {
-		opacity: 0.35;
-		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+		position: fixed;
+		inset: 0;
+		opacity: 0.08;
+		background: radial-gradient(circle at 20% 80%, rgba(201, 149, 108, 0.15) 0%, transparent 50%),
+			radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 40%),
+			radial-gradient(circle at 50% 50%, rgba(168, 162, 158, 0.05) 0%, transparent 60%);
+		pointer-events: none;
 	}
 
-	.bg-glow {
-		background:
-			radial-gradient(ellipse 90% 70% at 30% 10%, rgba(181, 194, 177, 0.5) 0%, transparent 50%),
-			radial-gradient(ellipse 70% 60% at 80% 30%, rgba(209, 199, 227, 0.45) 0%, transparent 45%),
-			radial-gradient(ellipse 80% 50% at 20% 80%, rgba(181, 164, 209, 0.35) 0%, transparent 50%),
-			radial-gradient(ellipse 60% 60% at 70% 90%, rgba(143, 163, 136, 0.4) 0%, transparent 45%);
+	.bg-warmth {
+		position: fixed;
+		inset: 0;
+		background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201, 149, 108, 0.06) 0%, transparent 60%),
+			radial-gradient(ellipse 60% 50% at 20% 80%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
+			radial-gradient(ellipse 50% 40% at 80% 20%, rgba(217, 119, 6, 0.03) 0%, transparent 40%);
+		pointer-events: none;
 	}
 
-	/* ===== Container ===== */
+	/* ===== Ambient Orbs ===== */
+	.ambient-orbs {
+		position: fixed;
+		inset: 0;
+		pointer-events: none;
+		overflow: hidden;
+	}
+
+	.orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(80px);
+		animation: drift 25s ease-in-out infinite;
+	}
+
+	.orb-1 {
+		width: 500px;
+		height: 500px;
+		top: -20%;
+		right: -15%;
+		background: radial-gradient(circle, rgba(201, 149, 108, 0.15) 0%, transparent 70%);
+		animation-delay: 0s;
+	}
+
+	.orb-2 {
+		width: 400px;
+		height: 400px;
+		bottom: -10%;
+		left: -10%;
+		background: radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, transparent 70%);
+		animation-delay: -12s;
+	}
+
+	@keyframes drift {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		25% {
+			transform: translate(30px, -20px) scale(1.05);
+		}
+		50% {
+			transform: translate(-20px, 30px) scale(0.95);
+		}
+		75% {
+			transform: translate(20px, 20px) scale(1.02);
+		}
+	}
+
+	/* ===== Layout ===== */
 	.container {
 		position: relative;
 		min-height: 100vh;
@@ -232,14 +288,14 @@
 
 	.content {
 		width: 100%;
-		max-width: 420px;
-		animation: fadeIn 0.8s var(--ease-gentle) forwards;
+		max-width: 400px;
+		animation: emerge 1s var(--ease-out-expo) forwards;
 	}
 
-	@keyframes fadeIn {
+	@keyframes emerge {
 		from {
 			opacity: 0;
-			transform: translateY(12px);
+			transform: translateY(24px);
 		}
 		to {
 			opacity: 1;
@@ -247,283 +303,285 @@
 		}
 	}
 
-	/* ===== Floating Shapes ===== */
-	.floating-shapes {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		pointer-events: none;
-	}
-
-	.shape {
-		position: absolute;
-		border-radius: 50%;
-		background: linear-gradient(135deg, var(--color-sage-300) 0%, var(--color-lavender-300) 100%);
-		opacity: 0.55;
-		filter: blur(50px);
-		animation: float 20s ease-in-out infinite;
-	}
-
-	.shape-1 {
-		width: 450px;
-		height: 450px;
-		top: -15%;
-		right: -10%;
-		animation-delay: 0s;
-		background: linear-gradient(135deg, var(--color-sage-400) 0%, var(--color-lavender-300) 100%);
-	}
-
-	.shape-2 {
-		width: 350px;
-		height: 350px;
-		bottom: 5%;
-		left: -8%;
-		animation-delay: -7s;
-	}
-
-	.shape-3 {
-		width: 300px;
-		height: 300px;
-		bottom: -8%;
-		right: 15%;
-		animation-delay: -14s;
-		background: linear-gradient(135deg, var(--color-lavender-400) 0%, var(--color-sage-400) 100%);
-	}
-
-	@keyframes float {
-		0%,
-		100% {
-			transform: translate(0, 0) scale(1);
-		}
-		33% {
-			transform: translate(20px, -30px) scale(1.05);
-		}
-		66% {
-			transform: translate(-15px, 20px) scale(0.95);
-		}
-	}
-
-	/* ===== Header ===== */
+	/* ===== Header & Logo ===== */
 	.header {
 		text-align: center;
-		margin-bottom: 2rem;
-		animation: fadeIn 0.8s var(--ease-gentle) 0.1s backwards;
+		margin-bottom: 2.5rem;
 	}
 
-	.shield-icon {
+	.logo {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 64px;
-		height: 64px;
-		margin-bottom: 1rem;
-		color: var(--color-sage-500);
+		width: 72px;
+		height: 72px;
+		margin-bottom: 1.25rem;
+		color: var(--copper);
+		animation: emerge 1s var(--ease-out-expo) 0.1s backwards;
 	}
 
-	.shield-icon svg {
+	.logo svg {
 		width: 100%;
 		height: 100%;
 	}
 
-	.title {
-		font-family: var(--font-display);
-		font-size: 2rem;
-		font-weight: 400;
-		letter-spacing: -0.02em;
-		color: var(--color-text-primary);
-		margin-bottom: 0.5rem;
+	/* Logo ring animations */
+	.ring {
+		transform-origin: center;
 	}
 
-	.subtitle {
-		font-size: 1.125rem;
-		color: var(--color-text-secondary);
+	.ring-outer {
+		animation: pulse-ring 4s ease-in-out infinite;
+	}
+
+	.ring-middle {
+		animation: pulse-ring 4s ease-in-out 0.5s infinite;
+	}
+
+	.ring-inner {
+		animation: pulse-ring 4s ease-in-out 1s infinite;
+	}
+
+	.core {
+		animation: breathe 4s ease-in-out infinite;
+	}
+
+	@keyframes pulse-ring {
+		0%,
+		100% {
+			opacity: 0.2;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.5;
+			transform: scale(1.02);
+		}
+	}
+
+	@keyframes breathe {
+		0%,
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.8;
+			transform: scale(0.95);
+		}
+	}
+
+	.title {
+		font-family: var(--font-display);
+		font-size: 2.25rem;
 		font-weight: 400;
+		letter-spacing: -0.01em;
+		color: var(--cream-50);
+		margin-bottom: 0.5rem;
+		animation: emerge 1s var(--ease-out-expo) 0.15s backwards;
+	}
+
+	.tagline {
+		font-family: var(--font-body);
+		font-size: 1.0625rem;
+		font-weight: 300;
+		color: var(--charcoal-400);
+		letter-spacing: 0.02em;
+		animation: emerge 1s var(--ease-out-expo) 0.2s backwards;
 	}
 
 	/* ===== Card ===== */
 	.card {
 		position: relative;
-		background: rgba(255, 255, 255, 0.7);
+		background: linear-gradient(
+			145deg,
+			rgba(41, 37, 36, 0.8) 0%,
+			rgba(28, 25, 23, 0.9) 100%
+		);
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
-		border-radius: 24px;
-		border: 1px solid rgba(255, 255, 255, 0.8);
+		border-radius: 20px;
+		border: 1px solid rgba(168, 162, 158, 0.1);
 		box-shadow:
-			0 4px 24px rgba(49, 59, 47, 0.06),
-			0 1px 3px rgba(49, 59, 47, 0.04);
-		overflow: hidden;
-		transition: all 0.4s var(--ease-gentle);
-		animation: fadeIn 0.8s var(--ease-gentle) 0.2s backwards;
+			0 0 0 1px rgba(0, 0, 0, 0.3),
+			0 20px 50px -10px rgba(0, 0, 0, 0.5),
+			0 0 80px -20px var(--copper-glow);
+		transition: all 0.5s var(--ease-out-expo);
+		animation: emerge 1s var(--ease-out-expo) 0.25s backwards;
 	}
 
 	.card.focused {
+		border-color: rgba(201, 149, 108, 0.3);
 		box-shadow:
-			0 8px 40px rgba(107, 133, 99, 0.12),
-			0 2px 8px rgba(49, 59, 47, 0.06);
-		border-color: var(--color-sage-200);
+			0 0 0 1px rgba(0, 0, 0, 0.3),
+			0 25px 60px -10px rgba(0, 0, 0, 0.6),
+			0 0 100px -20px var(--copper-glow);
 	}
 
-	.card-glow {
-		position: absolute;
-		inset: 0;
-		background: radial-gradient(
-			ellipse 100% 100% at 50% 0%,
-			rgba(181, 194, 177, 0.15) 0%,
-			transparent 70%
-		);
-		pointer-events: none;
-	}
-
-	.card-content {
-		position: relative;
+	.card-inner {
 		padding: 2rem;
 	}
 
-	.welcome-text {
+	.description {
 		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: var(--color-text-secondary);
+		line-height: 1.7;
+		color: var(--charcoal-300);
 		text-align: center;
-		margin-bottom: 1.75rem;
+		margin-bottom: 2rem;
+		font-weight: 300;
 	}
 
 	/* ===== Form ===== */
-	.input-group {
+	.field {
 		margin-bottom: 1.5rem;
 	}
 
 	.label {
 		display: block;
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		font-weight: 500;
-		color: var(--color-text-primary);
-		margin-bottom: 0.5rem;
+		color: var(--charcoal-300);
+		margin-bottom: 0.625rem;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
 	}
 
-	.input-wrapper {
+	.input-container {
 		display: flex;
 		align-items: center;
-		background: var(--color-cream-50);
-		border: 2px solid var(--color-sage-200);
-		border-radius: 14px;
+		background: rgba(12, 10, 9, 0.6);
+		border: 1px solid rgba(168, 162, 158, 0.15);
+		border-radius: 12px;
 		padding: 0 1rem;
-		transition: all 0.25s var(--ease-gentle);
+		transition: all 0.3s var(--ease-in-out);
 	}
 
-	.input-wrapper.focused {
-		border-color: var(--color-sage-400);
-		background: white;
-		box-shadow: 0 0 0 4px rgba(107, 133, 99, 0.1);
+	.input-container.focused {
+		border-color: var(--copper);
+		background: rgba(12, 10, 9, 0.8);
+		box-shadow: 0 0 0 3px rgba(201, 149, 108, 0.15);
 	}
 
-	.input-prefix {
+	.at-symbol {
 		font-size: 1rem;
-		color: var(--color-text-muted);
+		color: var(--charcoal-500);
+		font-weight: 400;
 		margin-right: 0.25rem;
-		font-weight: 500;
+		transition: color 0.3s var(--ease-in-out);
 	}
 
-	.input-wrapper input {
+	.input-container.focused .at-symbol {
+		color: var(--copper);
+	}
+
+	.input-container input {
 		flex: 1;
 		border: none;
 		background: transparent;
-		padding: 0.875rem 0;
+		padding: 1rem 0;
 		font-size: 1rem;
 		font-family: var(--font-body);
-		color: var(--color-text-primary);
+		font-weight: 400;
+		color: var(--cream-100);
 		outline: none;
 	}
 
-	.input-wrapper input::placeholder {
-		color: var(--color-text-muted);
-		opacity: 0.7;
+	.input-container input::placeholder {
+		color: var(--charcoal-600);
 	}
 
-	.input-wrapper input:disabled {
-		opacity: 0.6;
+	.input-container input:disabled {
+		opacity: 0.5;
 	}
 
-	.input-hint {
+	.hint {
 		font-size: 0.8125rem;
-		color: var(--color-text-muted);
-		margin-top: 0.625rem;
+		color: var(--charcoal-500);
+		margin-top: 0.75rem;
 		text-align: center;
+		font-weight: 300;
 	}
 
-	/* ===== Submit Button ===== */
-	.submit-btn {
+	/* ===== Button ===== */
+	.btn-continue {
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.5rem;
+		gap: 0.625rem;
 		padding: 1rem 1.5rem;
 		font-size: 1rem;
-		font-weight: 600;
+		font-weight: 500;
 		font-family: var(--font-body);
-		color: white;
-		background: linear-gradient(135deg, var(--color-sage-500) 0%, var(--color-sage-600) 100%);
+		color: var(--charcoal-950);
+		background: linear-gradient(135deg, var(--amber-500) 0%, var(--copper) 100%);
 		border: none;
-		border-radius: 14px;
+		border-radius: 12px;
 		cursor: pointer;
-		transition: all 0.3s var(--ease-gentle);
+		transition: all 0.3s var(--ease-out-expo);
 		box-shadow:
-			0 2px 8px rgba(86, 107, 79, 0.25),
-			inset 0 1px 0 rgba(255, 255, 255, 0.15);
+			0 4px 15px -3px rgba(245, 158, 11, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
 	}
 
-	.submit-btn:hover:not(:disabled) {
-		transform: translateY(-1px);
+	.btn-continue:hover:not(:disabled) {
+		transform: translateY(-2px);
 		box-shadow:
-			0 4px 16px rgba(86, 107, 79, 0.35),
-			inset 0 1px 0 rgba(255, 255, 255, 0.15);
+			0 8px 25px -5px rgba(245, 158, 11, 0.5),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
 	}
 
-	.submit-btn:active:not(:disabled) {
+	.btn-continue:active:not(:disabled) {
 		transform: translateY(0);
 	}
 
-	.submit-btn:disabled {
-		opacity: 0.5;
+	.btn-continue:disabled {
+		opacity: 0.4;
 		cursor: not-allowed;
+		transform: none;
 	}
 
-	.arrow-icon {
-		width: 20px;
-		height: 20px;
-		transition: transform 0.25s var(--ease-gentle);
-	}
-
-	.submit-btn:hover:not(:disabled) .arrow-icon {
-		transform: translateX(3px);
-	}
-
-	.spinner {
+	.arrow {
 		width: 18px;
 		height: 18px;
-		border: 2px solid rgba(255, 255, 255, 0.3);
-		border-top-color: white;
-		border-radius: 50%;
-		animation: spin 0.8s linear infinite;
+		transition: transform 0.3s var(--ease-out-expo);
 	}
 
-	@keyframes spin {
-		to {
-			transform: rotate(360deg);
+	.btn-continue:hover:not(:disabled) .arrow {
+		transform: translateX(4px);
+	}
+
+	.loading-pulse {
+		width: 16px;
+		height: 16px;
+		background: var(--charcoal-950);
+		border-radius: 50%;
+		animation: pulse 1.2s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.5;
+			transform: scale(0.85);
 		}
 	}
 
 	/* ===== Footer ===== */
 	.footer {
-		margin-top: 1.5rem;
-		animation: fadeIn 0.8s var(--ease-gentle) 0.4s backwards;
+		margin-top: 2rem;
+		text-align: center;
+		animation: emerge 1s var(--ease-out-expo) 0.35s backwards;
 	}
 
-	.footer-text {
+	.footer p {
 		font-size: 0.8125rem;
-		color: var(--color-text-muted);
-		text-align: center;
-		line-height: 1.5;
+		color: var(--charcoal-500);
+		line-height: 1.6;
+		font-weight: 300;
 	}
 
 	/* ===== Responsive ===== */
@@ -533,38 +591,44 @@
 		}
 
 		.title {
-			font-size: 1.75rem;
+			font-size: 1.875rem;
 		}
 
-		.card-content {
+		.logo {
+			width: 64px;
+			height: 64px;
+		}
+
+		.card-inner {
 			padding: 1.5rem;
-		}
-
-		.shield-icon {
-			width: 56px;
-			height: 56px;
 		}
 	}
 
 	/* ===== Reduced Motion ===== */
 	@media (prefers-reduced-motion: reduce) {
-		.shape,
+		.orb,
 		.content,
 		.header,
+		.logo,
+		.title,
+		.tagline,
 		.card,
-		.footer {
+		.footer,
+		.ring,
+		.core {
 			animation: none;
 		}
 
 		.card,
-		.input-wrapper,
-		.submit-btn {
+		.input-container,
+		.btn-continue,
+		.arrow {
 			transition: none;
 		}
 
-		.spinner {
+		.loading-pulse {
 			animation: none;
-			border-top-color: rgba(255, 255, 255, 0.7);
+			opacity: 0.7;
 		}
 	}
 </style>
