@@ -1,5 +1,5 @@
 /**
- * Session and authentication types for Bluesky Toxicity Shield
+ * Session and authentication types for Charcoal
  */
 
 /**

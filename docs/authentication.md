@@ -1,6 +1,6 @@
 # Authentication
 
-This document covers the OAuth authentication flow and session management for Bluesky Toxicity Shield.
+This document covers the OAuth authentication flow and session management for Charcoal.
 
 ## Overview
 
@@ -214,7 +214,7 @@ import { MemorySessionStore, MemoryStateStore } from '$lib/oauth/stores';
 | Variable         | Description                                        | Example                                        |
 | ---------------- | -------------------------------------------------- | ---------------------------------------------- |
 | `SESSION_SECRET` | 32-byte base64-encoded key for session encryption  | `0uNTnZMGtmCICdv/NYubOJEvZQ1LPrlvsQOHmWnzz+E=` |
-| `PUBLIC_URL`     | Public URL of the application (for OAuth redirect) | `https://toxicity-shield.example.com`          |
+| `PUBLIC_URL`     | Public URL of the application (for OAuth redirect) | `https://charcoal.example.com`          |
 | `REDIS_URL`      | Redis connection URL for OAuth session storage     | `redis://localhost:6379`                       |
 
 ### Generating a Session Secret

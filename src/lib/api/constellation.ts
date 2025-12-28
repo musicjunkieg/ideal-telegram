@@ -8,7 +8,7 @@
 import { withRetry } from './retry';
 
 const CONSTELLATION_BASE = 'https://constellation.microcosm.blue';
-const USER_AGENT = 'Bluesky Toxicity Shield (github.com/musicjunkieg/ideal-telegram)';
+const USER_AGENT = 'Charcoal (github.com/musicjunkieg/ideal-telegram)';
 
 /**
  * Source paths for different interaction types

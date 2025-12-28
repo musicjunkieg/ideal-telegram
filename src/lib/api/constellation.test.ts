@@ -42,7 +42,7 @@ describe('getBacklinks', () => {
 			expect.stringContaining('constellation.microcosm.blue'),
 			expect.objectContaining({
 				headers: expect.objectContaining({
-					'User-Agent': expect.stringContaining('Bluesky Toxicity Shield')
+					'User-Agent': expect.stringContaining('Charcoal')
 				})
 			})
 		);

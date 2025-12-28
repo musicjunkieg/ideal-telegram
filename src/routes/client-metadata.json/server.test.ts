@@ -23,7 +23,7 @@ describe('GET /client-metadata.json', () => {
 		const data = await response.json();
 
 		expect(response.status).toBe(200);
-		expect(data.client_name).toBe('Bluesky Toxicity Shield');
+		expect(data.client_name).toBe('Charcoal');
 	});
 
 	it('sets client_id to match the request URL', async () => {

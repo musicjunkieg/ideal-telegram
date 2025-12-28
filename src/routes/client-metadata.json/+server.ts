@@ -12,7 +12,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		client_id: clientId,
 
 		// App identification
-		client_name: 'Bluesky Toxicity Shield',
+		client_name: 'Charcoal',
 		client_uri: baseUrl,
 
 		// OAuth flow configuration

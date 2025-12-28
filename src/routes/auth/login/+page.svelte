@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Sign In - Bluesky Toxicity Shield</title>
+	<title>Sign In - Charcoal</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
@@ -56,7 +56,7 @@
 						/>
 					</svg>
 				</div>
-				<h1 class="title">Toxicity Shield</h1>
+				<h1 class="title">Charcoal</h1>
 				<p class="subtitle">Your peaceful corner of Bluesky</p>
 			</header>
 

@@ -29,7 +29,7 @@ export async function createOAuthClient(
 	oauthClient = new NodeOAuthClient({
 		clientMetadata: {
 			client_id: clientId,
-			client_name: 'Bluesky Toxicity Shield',
+			client_name: 'Charcoal',
 			client_uri: clientId.replace('/client-metadata.json', ''),
 			redirect_uris: [clientId.replace('/client-metadata.json', '/auth/callback')],
 			grant_types: ['authorization_code', 'refresh_token'],

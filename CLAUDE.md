@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Bluesky Toxicity Shield** - A web application that analyzes Bluesky interactions and identifies potentially toxic users via real-time firehose monitoring, with options for auto-block, dashboard review, or email digest.
+**Charcoal** - A web application that analyzes Bluesky interactions and identifies potentially toxic users via real-time firehose monitoring, with options for auto-block, dashboard review, or email digest.
 
 **Stack**: SvelteKit 5 + TypeScript, PostgreSQL + Drizzle, Python ML service (Detoxify), BullMQ + Redis
 
