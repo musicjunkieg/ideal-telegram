@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	let email = $state('');
-	let isSubmitting = $state(false);
-	let submitSuccess = $state(false);
-	let isFocused = $state(false);
+	// Leaflet publication URL - update this when you create your publication
+	const LEAFLET_URL = 'https://charcoal.leaflet.pub';
 
 	// Intersection Observer for scroll animations
 	let sectionsVisible = $state<Record<string, boolean>>({});
@@ -27,19 +25,6 @@
 
 		return () => observer.disconnect();
 	});
-
-	async function handleSubmit(e: SubmitEvent) {
-		e.preventDefault();
-		if (!email.trim() || isSubmitting) return;
-
-		isSubmitting = true;
-
-		// Simulate API call - replace with actual endpoint later
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		submitSuccess = true;
-		isSubmitting = false;
-	}
 </script>
 
 <svelte:head>
@@ -428,55 +413,34 @@
 
 					<h2 class="cta-title">Get early access</h2>
 					<p class="cta-subtitle">
-						Be among the first to experience a calmer way to engage on Bluesky. Join our waitlist
-						and we'll notify you when Charcoal is ready.
+						Be among the first to experience a calmer way to engage on Bluesky. Subscribe to our
+						publication and we'll notify you when Charcoal is ready.
 					</p>
 
-					{#if submitSuccess}
-						<div class="success-message">
-							<svg viewBox="0 0 24 24" fill="none" class="success-icon">
-								<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-								<path
-									d="M8 12l3 3 5-6"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-							<p>You're on the list. We'll be in touch soon.</p>
-						</div>
-					{:else}
-						<form class="waitlist-form" onsubmit={handleSubmit}>
-							<div class="input-wrapper" class:focused={isFocused}>
-								<input
-									type="email"
-									placeholder="you@example.com"
-									bind:value={email}
-									onfocus={() => (isFocused = true)}
-									onblur={() => (isFocused = false)}
-									required
-									disabled={isSubmitting}
-								/>
-								<button type="submit" class="submit-btn" disabled={!email.trim() || isSubmitting}>
-									{#if isSubmitting}
-										<span class="loading-dot"></span>
-									{:else}
-										<svg viewBox="0 0 20 20" fill="none">
-											<path
-												d="M4 10h12m-4-4l4 4-4 4"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-											/>
-										</svg>
-									{/if}
-								</button>
-							</div>
-							<p class="form-hint">No spam. Just updates on Charcoal's progress.</p>
-						</form>
-					{/if}
+					<a href={LEAFLET_URL} target="_blank" rel="noopener noreferrer" class="subscribe-btn">
+						<svg viewBox="0 0 24 24" fill="none" class="leaflet-icon">
+							<path
+								d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+						<span>Subscribe on Leaflet</span>
+						<svg viewBox="0 0 20 20" fill="none" class="external-icon">
+							<path
+								d="M11 3h6v6M6 14l11-11"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</a>
+					<p class="subscribe-hint">
+						Updates delivered to your Bluesky feed. No email required.
+					</p>
 				</div>
 			</div>
 		</section>
@@ -1223,106 +1187,44 @@
 		font-weight: 300;
 	}
 
-	.waitlist-form {
-		max-width: 400px;
-		margin: 0 auto;
-	}
-
-	.input-wrapper {
-		display: flex;
-		background: rgba(12, 10, 9, 0.6);
-		border: 1px solid rgba(168, 162, 158, 0.15);
-		border-radius: 12px;
-		overflow: hidden;
-		transition: all 0.3s var(--ease-in-out);
-	}
-
-	.input-wrapper.focused {
-		border-color: var(--copper);
-		box-shadow: 0 0 0 3px rgba(201, 149, 108, 0.15);
-	}
-
-	.input-wrapper input {
-		flex: 1;
-		border: none;
-		background: transparent;
-		padding: 1rem 1.25rem;
-		font-size: 1rem;
+	.subscribe-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		padding: 1rem 2rem;
+		font-size: 1.0625rem;
+		font-weight: 500;
 		font-family: var(--font-body);
-		color: var(--cream-100);
-		outline: none;
-	}
-
-	.input-wrapper input::placeholder {
-		color: var(--charcoal-600);
-	}
-
-	.submit-btn {
-		padding: 1rem 1.25rem;
-		background: linear-gradient(135deg, var(--amber-500) 0%, var(--copper) 100%);
-		border: none;
 		color: var(--charcoal-950);
-		cursor: pointer;
-		transition: all 0.3s var(--ease-out-expo);
+		background: linear-gradient(135deg, var(--amber-500) 0%, var(--copper) 100%);
+		border-radius: 12px;
+		text-decoration: none;
+		transition: all 0.4s var(--ease-out-expo);
+		box-shadow: 0 4px 20px -4px rgba(245, 158, 11, 0.4);
 	}
 
-	.submit-btn:hover:not(:disabled) {
-		filter: brightness(1.1);
+	.subscribe-btn:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 8px 30px -4px rgba(245, 158, 11, 0.5);
 	}
 
-	.submit-btn:disabled {
-		opacity: 0.4;
-		cursor: not-allowed;
-	}
-
-	.submit-btn svg {
+	.leaflet-icon {
 		width: 20px;
 		height: 20px;
 	}
 
-	.loading-dot {
+	.external-icon {
 		width: 16px;
 		height: 16px;
-		background: var(--charcoal-950);
-		border-radius: 50%;
-		animation: pulse-dot 1s ease-in-out infinite;
+		opacity: 0.7;
 	}
 
-	@keyframes pulse-dot {
-		0%,
-		100% {
-			transform: scale(1);
-			opacity: 1;
-		}
-		50% {
-			transform: scale(0.8);
-			opacity: 0.5;
-		}
-	}
-
-	.form-hint {
-		font-size: 0.8125rem;
+	.subscribe-hint {
+		font-size: 0.875rem;
 		color: var(--charcoal-500);
-		margin-top: 1rem;
+		margin-top: 1.25rem;
 		font-weight: 300;
-	}
-
-	.success-message {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1rem;
-		color: var(--copper);
-	}
-
-	.success-icon {
-		width: 48px;
-		height: 48px;
-	}
-
-	.success-message p {
-		font-size: 1.0625rem;
-		color: var(--charcoal-300);
 	}
 
 	/* ===== Footer ===== */
@@ -1426,17 +1328,10 @@
 	}
 
 	@media (max-width: 480px) {
-		.hero-cta {
+		.hero-cta,
+		.subscribe-btn {
 			width: 100%;
 			justify-content: center;
-		}
-
-		.input-wrapper {
-			flex-direction: column;
-		}
-
-		.submit-btn {
-			border-top: 1px solid rgba(168, 162, 158, 0.1);
 		}
 	}
 
@@ -1465,7 +1360,7 @@
 		.testimonial,
 		.hero-cta,
 		.nav-login,
-		.submit-btn {
+		.subscribe-btn {
 			transition: none;
 		}
 	}
