@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500">
+  <defs>
+    <linearGradient id="bannerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="50%" stop-color="#0c0a09"/>
+      <stop offset="100%" stop-color="#1c1917"/>
+    </linearGradient>
+    <radialGradient id="warmGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#c9956c" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#c9956c" stop-opacity="0"/>
+    </radialGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&amp;family=Outfit:wght@300;400&amp;display=swap');
+      .headline { font-family: 'Libre Baskerville', 'Georgia', serif; font-weight: 400; }
+      .subtitle { font-family: 'Outfit', 'Helvetica Neue', sans-serif; font-weight: 300; letter-spacing: 0.1em; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1500" height="500" fill="url(#bannerBg)"/>
+
+  <!-- Warm glow in center -->
+  <rect width="1500" height="500" fill="url(#warmGlow)"/>
+
+  <!-- Decorative rings - left side, partially visible -->
+  <circle cx="150" cy="250" r="400" stroke="#c9956c" stroke-width="1" fill="none" opacity="0.08"/>
+  <circle cx="150" cy="250" r="340" stroke="#c9956c" stroke-width="1" fill="none" opacity="0.1"/>
+  <circle cx="150" cy="250" r="280" stroke="#c9956c" stroke-width="1.5" fill="none" opacity="0.12"/>
+  <circle cx="150" cy="250" r="220" stroke="#c9956c" stroke-width="1.5" fill="none" opacity="0.15"/>
+
+  <!-- Decorative rings - right side, partially visible -->
+  <circle cx="1350" cy="250" r="400" stroke="#c9956c" stroke-width="1" fill="none" opacity="0.08"/>
+  <circle cx="1350" cy="250" r="340" stroke="#c9956c" stroke-width="1" fill="none" opacity="0.1"/>
+  <circle cx="1350" cy="250" r="280" stroke="#c9956c" stroke-width="1.5" fill="none" opacity="0.12"/>
+  <circle cx="1350" cy="250" r="220" stroke="#c9956c" stroke-width="1.5" fill="none" opacity="0.15"/>
+
+  <!-- Main headline -->
+  <text x="750" y="220" text-anchor="middle" class="headline" fill="#fef3c7" font-size="72">
+    Engage with confidence
+  </text>
+
+  <!-- Decorative line -->
+  <line x1="550" y1="260" x2="950" y2="260" stroke="#c9956c" stroke-width="1" opacity="0.5"/>
+
+  <!-- Subtitle -->
+  <text x="750" y="310" text-anchor="middle" class="subtitle" fill="#c9956c" font-size="24">
+    YOUR SHIELD AGAINST TOXIC ACTORS
+  </text>
+</svg>
