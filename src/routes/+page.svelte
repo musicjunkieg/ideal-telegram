@@ -270,7 +270,7 @@
 						</div>
 						<h3 class="step-title">Protect</h3>
 						<p class="step-desc">
-							You decide what happens—auto-block, review later, or receive a digest of flagged
+							You decide what happens—auto-mute or block, then review later and receive a digest of flagged
 							accounts.
 						</p>
 					</div>
@@ -1364,4 +1364,7 @@
 			transition: none;
 		}
 	}
+	#voices {
+	display: none;
+}
 </style>
