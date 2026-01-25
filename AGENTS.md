@@ -1,6 +1,6 @@
 # Agent Instructions
 
-This project uses **bd** (beads) for issue tracking. Run `bd onboard` to get started.
+This project uses **chainlink** for issue tracking. Run `chainlink --help` to get started.
 
 ## Landing the Plane (Session Completion)
 
@@ -14,7 +14,6 @@ This project uses **bd** (beads) for issue tracking. Run `bd onboard` to get sta
 4. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd sync
    git push
    git status  # MUST show "up to date with origin"
    ```

@@ -10,7 +10,7 @@ bun.lockb
 /.svelte-kit/
 
 # Tooling directories
-.beads/
+.chainlink/
 .claude/
 
 # Miscellaneous

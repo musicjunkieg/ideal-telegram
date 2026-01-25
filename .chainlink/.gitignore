@@ -1,0 +1,7 @@
+# SQLite database
+issues.db
+issues.db-wal
+issues.db-shm
+
+# Session files
+session.json

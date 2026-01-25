@@ -28,7 +28,7 @@ Detailed documentation lives in the `docs/` folder:
 - [Build Instructions](docs/build-instructions.md) - Development, build, and code quality commands
 - [Testing](docs/testing.md) - TDD workflow, test patterns, and coverage goals
 - [Authentication](docs/authentication.md) - OAuth flow, session management, and protected routes
-- [Beads Usage](docs/beads-usage.md) - Issue tracking workflow and commands
+- [Chainlink Usage](docs/chainlink-usage.md) - Issue tracking workflow and commands
 - [Architecture](docs/architecture.md) - System design, external services, and file structure
 
 ## Documentation Guidelines
